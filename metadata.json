@@ -1,0 +1,6 @@
+{
+  "name": "SRM Tiruchirappalli — Cheminformatics Virtual Laboratory",
+  "description": "Official Cheminformatics Virtual Laboratory and Automated Molecular Data Analysis Portal for SRM Institute of Science and Technology, Tiruchirappalli (Division of Chemistry).",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
