@@ -22,6 +22,161 @@ const LEARNING_OBJECTIVES = [
   { id: 'assessment', title: 'Complete the 12-Question Cheminformatics Assessment & PDF Dossier' },
 ];
 
+export interface CheminformaticsCodeSnippet {
+  id: string;
+  title: string;
+  library: string;
+  description: string;
+  code: string;
+}
+
+export function buildImportantCheminformaticsCode(
+  activeMolecule: MoleculeRecord,
+  comparisonList: MoleculeRecord[]
+): CheminformaticsCodeSnippet[] {
+  const targetSmiles = activeMolecule.canonicalSmiles || activeMolecule.smiles || 'CC(=O)OC1=CC=CC=C1C(=O)O';
+  const targetName = activeMolecule.name || 'Aspirin';
+  const safeFileSlug = targetName.replace(/[^a-zA-Z0-9_]/g, '_');
+
+  const compareEntries = (comparisonList.length > 0 ? comparisonList : [activeMolecule])
+    .slice(0, 6)
+    .map(
+      (m) =>
+        `    ("${(m.name || 'Compound').replace(/"/g, '\\"')}", "${(
+          m.canonicalSmiles ||
+          m.smiles ||
+          ''
+        ).replace(/"/g, '\\"')}")`
+    )
+    .join(',\n');
+
+  return [
+    {
+      id: 'rdkit-2d-descriptors',
+      title: '1. RDKit SMILES Parsing, 2D Depiction & Lipinski Rule of Five Descriptors',
+      library: 'RDKit (rdkit.Chem, Descriptors, Lipinski, QED, Draw)',
+      description:
+        'Parses the canonical SMILES string into a molecular graph, computes physicochemical descriptors, evaluates Lipinski Rule of Five compliance, and exports a 2D chemical structure PNG.',
+      code: `from rdkit import Chem
+from rdkit.Chem import Draw, Descriptors, Lipinski, rdMolDescriptors, QED
+
+# 1. Parse and canonicalize SMILES notation for ${targetName}
+smiles = "${targetSmiles}"
+mol = Chem.MolFromSmiles(smiles)
+if mol is None:
+    raise ValueError(f"Invalid SMILES syntax: {smiles}")
+
+canonical_smiles = Chem.MolToSmiles(mol, canonical=True)
+formula = rdMolDescriptors.CalcMolFormula(mol)
+
+# 2. Compute Physicochemical & Lipinski / Veber Descriptors
+mw = Descriptors.MolWt(mol)
+logp = Descriptors.MolLogP(mol)
+tpsa = Descriptors.TPSA(mol)
+hbd = Lipinski.NumHDonors(mol)
+hba = Lipinski.NumHAcceptors(mol)
+rot_bonds = Lipinski.NumRotatableBonds(mol)
+qed_score = QED.qed(mol)
+
+violations = sum([mw > 500, logp > 5.0, hbd > 5, hba > 10])
+print(f"Compound: ${targetName} ({formula}) | Canonical SMILES: {canonical_smiles}")
+print(f"MW: {mw:.2f} Da | LogP: {logp:.2f} | TPSA: {tpsa:.1f} A^2 | HBD: {hbd} | HBA: {hba}")
+print(f"Rotatable Bonds: {rot_bonds} | QED: {qed_score:.2f} | Lipinski Violations: {violations}")
+
+# 3. Render 2D Topological Structure Diagram
+Draw.MolToFile(mol, "${safeFileSlug}_2D_Structure.png", size=(500, 400))`,
+    },
+    {
+      id: 'rdkit-3d-py3dmol',
+      title: '2. 3D Conformer Embedding (ETKDGv3), MMFF94 Optimization & py3Dmol Viewer',
+      library: 'RDKit AllChem + py3Dmol (3Dmol.js WebGL Engine)',
+      description:
+        'Adds explicit hydrogens, generates a 3D spatial conformer using ETKDGv3 distance geometry, minimizes energy via the MMFF94 force field, and renders an interactive 3D viewer.',
+      code: `from rdkit import Chem
+from rdkit.Chem import AllChem
+import py3Dmol
+
+# 1. Add explicit hydrogens and embed 3D coordinates using ETKDGv3
+mol_3d = Chem.AddHs(Chem.MolFromSmiles("${targetSmiles}"))
+AllChem.EmbedMolecule(mol_3d, AllChem.ETKDGv3())
+AllChem.MMFFOptimizeMolecule(mol_3d, maxIters=500)
+
+# 2. Export 3D Structure Data File (SDF / MolBlock)
+sdf_block = Chem.MolToMolBlock(mol_3d)
+with open("${safeFileSlug}_3D_Conformer.sdf", "w") as f:
+    f.write(sdf_block)
+
+# 3. Interactive 3D Visualization in py3Dmol (Ball & Stick + VDW Surface + Spin)
+viewer = py3Dmol.view(width=650, height=420)
+viewer.addModel(sdf_block, "sdf")
+viewer.setStyle({"stick": {"radius": 0.16, "colorscheme": "Jmol"},
+                 "sphere": {"scale": 0.28, "colorscheme": "Jmol"}})
+viewer.setBackgroundColor("#070A12")
+viewer.zoomTo()
+viewer.spin("y")
+viewer.show()`,
+    },
+    {
+      id: 'pubchem-api-query',
+      title: '3. PubChem Database Automated Compound Lookup (PubChemPy / PUG-REST)',
+      library: 'PubChemPy (pubchempy) & NCBI PubChem PUG-REST API',
+      description:
+        'Queries the authoritative NCBI PubChem Database by SMILES or compound name to retrieve CID, IUPAC systematic nomenclature, InChIKey, and XLogP3.',
+      code: `import pubchempy as pcp
+
+# Query NCBI PubChem Database for ${targetName}
+compounds = pcp.get_compounds("${targetSmiles}", namespace="smiles")
+
+if compounds:
+    c = compounds[0]
+    print(f"PubChem CID       : {c.cid}")
+    print(f"IUPAC Name        : {c.iupac_name}")
+    print(f"Molecular Formula : {c.molecular_formula}")
+    print(f"Molecular Weight  : {c.molecular_weight} g/mol")
+    print(f"XLogP3            : {c.xlogp}")
+    print(f"InChIKey          : {c.inchikey}")`,
+    },
+    {
+      id: 'pandas-sar-matrix',
+      title: '4. Multi-Molecule Structure-Property Analysis Matrix (Pandas DataFrame)',
+      library: 'Pandas (pandas) + RDKit Descriptors',
+      description:
+        'Builds a tabular Pandas DataFrame across all molecules in the comparison matrix, filters by molecular weight and Lipinski compliance, and exports a CSV dataset.',
+      code: `import pandas as pd
+from rdkit import Chem
+from rdkit.Chem import Descriptors, Lipinski, rdMolDescriptors
+
+dataset = [
+${compareEntries}
+]
+
+records = []
+for name, smi in dataset:
+    m = Chem.MolFromSmiles(smi)
+    if m:
+        mw = round(Descriptors.MolWt(m), 2)
+        logp = round(Descriptors.MolLogP(m), 2)
+        tpsa = round(Descriptors.TPSA(m), 1)
+        hbd = Lipinski.NumHDonors(m)
+        hba = Lipinski.NumHAcceptors(m)
+        rotb = Lipinski.NumRotatableBonds(m)
+        heavy = m.GetNumHeavyAtoms()
+        viol = sum([mw > 500, logp > 5, hbd > 5, hba > 10])
+        records.append({
+            "Compound": name, "Formula": rdMolDescriptors.CalcMolFormula(m),
+            "SMILES": smi, "MW_Da": mw, "Heavy_Atoms": heavy, "LogP": logp,
+            "TPSA_A2": tpsa, "HBD": hbd, "HBA": hba, "RotB": rotb,
+            "Lipinski_Pass": viol <= 1
+        })
+
+df = pd.DataFrame(records)
+print(df.to_string(index=False))
+print("\\nStatistical Summary (Mean):\\n", df.mean(numeric_only=True).round(2))
+df.to_csv("SRM_Cheminformatics_Comparison_DataFrame.csv", index=False)`,
+    },
+  ];
+}
+
 interface ReportPayload {
   student: StudentProfile;
   activeMolecule: MoleculeRecord;
@@ -530,6 +685,64 @@ export async function generateOfficialLabReportPdf(payload: ReportPayload): Prom
       1: { cellWidth: 96 },
       2: { cellWidth: 50 },
       3: { cellWidth: 24, fontStyle: 'bold', halign: 'center' },
+    },
+  });
+
+  y = (doc as any).lastAutoTable.finalY + 8;
+
+  // 7. Important Cheminformatics Implementation Code (RDKit, py3Dmol, PubChemPy & Pandas)
+  doc.addPage();
+  y = 16;
+
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(10.5);
+  doc.setTextColor(15, 23, 42);
+  doc.text(
+    '7. IMPORTANT CHEMINFORMATICS PYTHON CODE (RDKit, py3Dmol, PubChemPy & Pandas)',
+    14,
+    y
+  );
+  y += 2.5;
+
+  const codeSnippets = buildImportantCheminformaticsCode(
+    activeMolecule,
+    comparisonList
+  );
+
+  autoTable(doc, {
+    startY: y,
+    theme: 'grid',
+    styles: {
+      font: 'courier',
+      fontSize: 7,
+      cellPadding: 2.5,
+      textColor: [15, 23, 42],
+      lineColor: [148, 163, 184],
+      lineWidth: 0.2,
+    },
+    headStyles: {
+      font: 'helvetica',
+      fillColor: [30, 58, 138],
+      textColor: [255, 255, 255],
+      fontStyle: 'bold',
+      fontSize: 8,
+    },
+    head: [['Module & Library', 'Executable Python Cheminformatics Code']],
+    body: codeSnippets.map((snippet) => [
+      `${snippet.title}\n\nLibrary:\n${snippet.library}\n\nPurpose:\n${snippet.description}`,
+      snippet.code,
+    ]),
+    columnStyles: {
+      0: {
+        font: 'helvetica',
+        cellWidth: 52,
+        fillColor: [241, 245, 249],
+      },
+      1: {
+        font: 'courier',
+        cellWidth: 130,
+        fillColor: [248, 250, 252],
+      },
     },
   });
 

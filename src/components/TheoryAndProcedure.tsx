@@ -6,7 +6,6 @@ import {
   HelpCircle,
   Play,
   Search,
-  Sparkles,
 } from 'lucide-react';
 import { LabModuleId } from '../types/chemistry';
 
@@ -180,22 +179,22 @@ export const TheoryAndProcedure: React.FC<TheoryAndProcedureProps> = ({
   return (
     <div className="max-w-5xl mx-auto space-y-6">
       {/* Header Banner */}
-      <section className="bg-white border border-slate-200 rounded-xl p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <section className="bg-white dark:bg-[#0D1322] border border-slate-200 dark:border-slate-800 rounded-xl p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <p className="text-xs font-mono uppercase text-teal-700 font-semibold">
-            PAGE 03 · CHEMINFORMATICS THEORY & SMILES INPUT
+          <p className="text-xs font-mono text-cyan-700 dark:text-cyan-400 font-semibold">
+            Page 03 · Cheminformatics Theory & SMILES Input
           </p>
-          <h2 className="text-xl sm:text-2xl font-bold text-slate-900 mt-0.5">
+          <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-slate-100 mt-0.5">
             Cheminformatics Theory, Interactive Glossary & SMILES Input
           </h2>
-          <p className="text-sm text-slate-600 mt-1">
+          <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
             Explore key cheminformatics definitions in the interactive glossary below, then enter your own SMILES notation or test an example molecule.
           </p>
         </div>
         <button
           type="button"
           onClick={() => onNavigateModule('visualizer')}
-          className="px-4 py-2.5 text-xs font-bold text-white bg-blue-900 hover:bg-blue-800 rounded-lg transition-colors whitespace-nowrap shrink-0 flex items-center gap-1.5 cursor-pointer"
+          className="px-4 py-2.5 text-xs font-bold text-white dark:text-slate-950 bg-cyan-700 dark:bg-cyan-400 hover:bg-cyan-800 dark:hover:bg-cyan-300 rounded-lg transition-colors whitespace-nowrap shrink-0 flex items-center gap-1.5 cursor-pointer"
         >
           Next: 2D & 3D Visualizer
           <ArrowRight className="w-4 h-4" />
@@ -203,16 +202,16 @@ export const TheoryAndProcedure: React.FC<TheoryAndProcedureProps> = ({
       </section>
 
       {/* INTERACTIVE CHEMINFORMATICS GLOSSARY COMPONENT */}
-      <section className="bg-white border border-slate-200 rounded-xl p-6 sm:p-8 space-y-5">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
+      <section className="bg-white dark:bg-[#0D1322] border border-slate-200 dark:border-slate-800 rounded-xl p-6 sm:p-8 space-y-5">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200 dark:border-slate-800">
           <div>
             <div className="flex items-center gap-2">
-              <HelpCircle className="w-4 h-4 text-teal-700" />
-              <span className="text-xs font-mono uppercase text-teal-700 font-semibold">
-                INTERACTIVE CHEMINFORMATICS GLOSSARY
+              <HelpCircle className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
+              <span className="text-xs font-mono text-cyan-700 dark:text-cyan-400 font-semibold">
+                Interactive Cheminformatics Glossary
               </span>
             </div>
-            <h3 className="text-lg font-bold text-slate-900 mt-0.5">
+            <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 mt-0.5">
               Click Any Term to View Definition, Thresholds & Chemical Examples
             </h3>
           </div>
@@ -225,7 +224,7 @@ export const TheoryAndProcedure: React.FC<TheoryAndProcedureProps> = ({
               value={glossarySearch}
               onChange={(e) => setGlossarySearch(e.target.value)}
               placeholder="Filter glossary terms..."
-              className="w-full pl-8 pr-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-900 text-slate-900"
+              className="w-full pl-8 pr-3 py-1.5 text-xs bg-slate-50 dark:bg-[#131C31] border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 text-slate-900 dark:text-slate-100"
             />
           </div>
         </div>
@@ -239,10 +238,10 @@ export const TheoryAndProcedure: React.FC<TheoryAndProcedureProps> = ({
                 key={item.id}
                 type="button"
                 onClick={() => setSelectedTermId(item.id)}
-                className={`px-3.5 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5 border ${
+                className={`px-3.5 py-2 rounded-lg text-xs font-semibold transition-colors cursor-pointer flex items-center gap-1.5 border whitespace-nowrap shrink-0 ${
                   isSelected
-                    ? 'bg-blue-900 text-white border-blue-900 shadow-xs'
-                    : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100 hover:text-slate-900'
+                    ? 'bg-cyan-700 dark:bg-cyan-400 text-white dark:text-slate-950 border-cyan-700 dark:border-cyan-400'
+                    : 'bg-slate-50 dark:bg-[#131C31] text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800'
                 }`}
               >
                 <span>{item.term}</span>
@@ -250,7 +249,7 @@ export const TheoryAndProcedure: React.FC<TheoryAndProcedureProps> = ({
             );
           })}
           {filteredGlossary.length === 0 && (
-            <p className="text-xs text-slate-500 py-2">
+            <p className="text-xs text-slate-500 dark:text-slate-400 py-2">
               No glossary terms match "{glossarySearch}". Try searching for SMILES, TPSA, or Lipinski.
             </p>
           )}
@@ -258,15 +257,15 @@ export const TheoryAndProcedure: React.FC<TheoryAndProcedureProps> = ({
 
         {/* Active Term Detailed Definition Panel */}
         {activeGlossaryItem && (
-          <div className="p-5 bg-slate-50 border border-slate-200 rounded-xl space-y-4">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-slate-200">
+          <div className="p-5 bg-slate-50 dark:bg-[#131C31] border border-slate-200 dark:border-slate-800 rounded-xl space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-slate-200 dark:border-slate-800">
               <div>
-                <span className="text-[11px] font-mono uppercase font-semibold text-teal-700">
+                <span className="text-[11px] font-mono font-semibold text-cyan-700 dark:text-cyan-400">
                   {activeGlossaryItem.category}
                 </span>
-                <h4 className="text-base sm:text-lg font-bold text-slate-900">
+                <h4 className="text-base sm:text-lg font-bold text-slate-900 dark:text-slate-100">
                   {activeGlossaryItem.term} —{' '}
-                  <span className="font-normal text-slate-700">
+                  <span className="font-normal text-slate-700 dark:text-slate-300">
                     {activeGlossaryItem.fullName}
                   </span>
                 </h4>
@@ -274,41 +273,41 @@ export const TheoryAndProcedure: React.FC<TheoryAndProcedureProps> = ({
               <button
                 type="button"
                 onClick={() => onTrySmilesInVisualizer(activeGlossaryItem.exampleSmiles)}
-                className="px-3.5 py-2 text-xs font-bold text-blue-900 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-lg transition-colors whitespace-nowrap shrink-0 flex items-center gap-1.5 cursor-pointer self-start sm:self-auto"
+                className="px-3.5 py-2 text-xs font-bold text-cyan-800 dark:text-cyan-300 bg-cyan-50 dark:bg-cyan-950/60 hover:bg-cyan-100 dark:hover:bg-cyan-900/60 border border-cyan-200 dark:border-cyan-700/60 rounded-lg transition-colors whitespace-nowrap shrink-0 flex items-center gap-1.5 cursor-pointer self-start sm:self-auto"
               >
-                <Sparkles className="w-3.5 h-3.5" />
+                <Play className="w-3.5 h-3.5" />
                 Inspect {activeGlossaryItem.exampleMoleculeName} in 2D/3D
               </button>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs leading-relaxed">
-              <div className="p-3.5 bg-white border border-slate-200 rounded-lg space-y-1">
-                <div className="font-mono font-bold uppercase text-slate-500 text-[11px]">
+              <div className="p-3.5 bg-white dark:bg-[#0D1322] border border-slate-200 dark:border-slate-800 rounded-lg space-y-1">
+                <div className="font-mono font-bold text-slate-500 dark:text-slate-400 text-[11px]">
                   Scientific Definition
                 </div>
-                <p className="text-slate-800 text-xs sm:text-sm">
+                <p className="text-slate-800 dark:text-slate-200 text-xs sm:text-sm">
                   {activeGlossaryItem.definition}
                 </p>
               </div>
 
-              <div className="p-3.5 bg-white border border-slate-200 rounded-lg space-y-1">
-                <div className="font-mono font-bold uppercase text-blue-900 text-[11px]">
+              <div className="p-3.5 bg-white dark:bg-[#0D1322] border border-slate-200 dark:border-slate-800 rounded-lg space-y-1">
+                <div className="font-mono font-bold text-cyan-700 dark:text-cyan-400 text-[11px]">
                   Key Rule / Threshold
                 </div>
-                <p className="text-slate-800 font-medium text-xs sm:text-sm">
+                <p className="text-slate-800 dark:text-slate-200 font-medium text-xs sm:text-sm">
                   {activeGlossaryItem.keyRuleOrThreshold}
                 </p>
               </div>
 
-              <div className="p-3.5 bg-white border border-slate-200 rounded-lg space-y-1">
-                <div className="font-mono font-bold uppercase text-teal-700 text-[11px]">
+              <div className="p-3.5 bg-white dark:bg-[#0D1322] border border-slate-200 dark:border-slate-800 rounded-lg space-y-1">
+                <div className="font-mono font-bold text-emerald-700 dark:text-emerald-400 text-[11px]">
                   Laboratory Example ({activeGlossaryItem.exampleMoleculeName})
                 </div>
-                <p className="text-slate-800 text-xs sm:text-sm">
+                <p className="text-slate-800 dark:text-slate-200 text-xs sm:text-sm">
                   {activeGlossaryItem.exampleText}
                 </p>
-                <div className="pt-1 font-mono text-[11px] text-slate-500">
-                  SMILES: <strong className="text-slate-800">{activeGlossaryItem.exampleSmiles}</strong>
+                <div className="pt-1 font-mono text-[11px] text-slate-500 dark:text-slate-400">
+                  SMILES: <strong className="text-slate-800 dark:text-cyan-300">{activeGlossaryItem.exampleSmiles}</strong>
                 </div>
               </div>
             </div>
@@ -318,44 +317,44 @@ export const TheoryAndProcedure: React.FC<TheoryAndProcedureProps> = ({
 
       {/* Core Theory Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-white border border-slate-200 rounded-xl p-5 space-y-2">
-          <div className="flex items-center gap-2 text-blue-900 font-bold text-sm">
+        <div className="bg-white dark:bg-[#0D1322] border border-slate-200 dark:border-slate-800 rounded-xl p-5 space-y-2">
+          <div className="flex items-center gap-2 text-cyan-700 dark:text-cyan-400 font-bold text-sm">
             <BookOpen className="w-4 h-4" />
-            SMILES Notation
+            01. SMILES Notation
           </div>
-          <p className="text-xs text-slate-600 leading-relaxed">
-            <strong>SMILES</strong> (Simplified Molecular Input Line Entry System) converts chemical structures into text strings: atoms (<code className="font-mono">C, N, O</code>), double bonds (<code className="font-mono">=</code>), triple bonds (<code className="font-mono">#</code>), branches (<code className="font-mono">()</code>), and rings (<code className="font-mono">c1ccccc1</code>).
+          <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+            <strong className="text-slate-900 dark:text-slate-200">SMILES</strong> (Simplified Molecular Input Line Entry System) converts chemical structures into text strings: atoms (<code className="font-mono">C, N, O</code>), double bonds (<code className="font-mono">=</code>), triple bonds (<code className="font-mono">#</code>), branches (<code className="font-mono">()</code>), and rings (<code className="font-mono">c1ccccc1</code>).
           </p>
         </div>
 
-        <div className="bg-white border border-slate-200 rounded-xl p-5 space-y-2">
-          <div className="flex items-center gap-2 text-teal-700 font-bold text-sm">
+        <div className="bg-white dark:bg-[#0D1322] border border-slate-200 dark:border-slate-800 rounded-xl p-5 space-y-2">
+          <div className="flex items-center gap-2 text-emerald-700 dark:text-emerald-400 font-bold text-sm">
             <FlaskConical className="w-4 h-4" />
-            2D & 3D Structures
+            02. 2D & 3D Structures
           </div>
-          <p className="text-xs text-slate-600 leading-relaxed">
-            From a SMILES string, our portal generates a <strong>2D skeletal diagram</strong> and an interactive <strong>3D spatial conformer</strong> using <code className="font-mono">3Dmol.js</code> (<code className="font-mono">py3Dmol</code>) with Ball & Stick, Stick, and Space-Filling (CPK) models.
+          <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+            From a SMILES string, our portal generates a <strong className="text-slate-900 dark:text-slate-200">2D skeletal diagram</strong> and an interactive <strong className="text-slate-900 dark:text-slate-200">3D spatial conformer</strong> using <code className="font-mono">3Dmol.js</code> (<code className="font-mono">py3Dmol</code>) with Ball & Stick, Stick, and Space-Filling (CPK) models.
           </p>
         </div>
 
-        <div className="bg-white border border-slate-200 rounded-xl p-5 space-y-2">
-          <div className="flex items-center gap-2 text-amber-700 font-bold text-sm">
+        <div className="bg-white dark:bg-[#0D1322] border border-slate-200 dark:border-slate-800 rounded-xl p-5 space-y-2">
+          <div className="flex items-center gap-2 text-amber-700 dark:text-amber-400 font-bold text-sm">
             <BookOpen className="w-4 h-4" />
-            Lipinski Rule of Five
+            03. Lipinski Rule of Five
           </div>
-          <p className="text-xs text-slate-600 leading-relaxed">
-            Evaluates oral drug bioavailability: <strong>MW ≤ 500 g/mol</strong>, <strong>XLogP ≤ 5</strong> (lipophilicity), <strong>HBD ≤ 5</strong>, <strong>HBA ≤ 10</strong>, and <strong>TPSA ≤ 140 Å²</strong>.
+          <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+            Evaluates oral drug bioavailability: <strong className="text-slate-900 dark:text-slate-200">MW ≤ 500 g/mol</strong>, <strong className="text-slate-900 dark:text-slate-200">XLogP ≤ 5</strong> (lipophilicity), <strong className="text-slate-900 dark:text-slate-200">HBD ≤ 5</strong>, <strong className="text-slate-900 dark:text-slate-200">HBA ≤ 10</strong>, and <strong className="text-slate-900 dark:text-slate-200">TPSA ≤ 140 Å²</strong>.
           </p>
         </div>
       </div>
 
       {/* Custom SMILES Entry + 6 Reference Example Molecules */}
-      <section className="bg-white border border-slate-200 rounded-xl p-6 sm:p-8 space-y-5">
-        <div className="pb-3 border-b border-slate-200">
-          <h3 className="text-lg font-bold text-slate-900">
+      <section className="bg-white dark:bg-[#0D1322] border border-slate-200 dark:border-slate-800 rounded-xl p-6 sm:p-8 space-y-5">
+        <div className="pb-3 border-b border-slate-200 dark:border-slate-800">
+          <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100">
             Enter Your Own SMILES or Select an Example Molecule
           </h3>
-          <p className="text-xs sm:text-sm text-slate-600 mt-0.5">
+          <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-0.5">
             Type any custom SMILES string below, or click one of the 6 example molecules to populate the box and open it in the 2D/3D Visualizer.
           </p>
         </div>
@@ -367,23 +366,23 @@ export const TheoryAndProcedure: React.FC<TheoryAndProcedureProps> = ({
             value={customSmiles}
             onChange={(e) => setCustomSmiles(e.target.value)}
             placeholder="Enter any SMILES notation (e.g., CCO, c1ccccc1, CC(=O)O)..."
-            className="flex-1 px-4 py-3 text-sm font-mono bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-900 text-slate-900"
+            className="flex-1 px-4 py-3 text-sm font-mono bg-slate-50 dark:bg-[#131C31] border border-slate-300 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 text-slate-900 dark:text-slate-100"
           />
           <button
             type="submit"
-            className="px-6 py-3 text-xs sm:text-sm font-bold text-white bg-blue-900 hover:bg-blue-800 rounded-lg transition-colors whitespace-nowrap shrink-0 flex items-center justify-center gap-2 cursor-pointer"
+            className="px-6 py-3 text-xs sm:text-sm font-bold text-white dark:text-slate-950 bg-cyan-700 dark:bg-cyan-400 hover:bg-cyan-800 dark:hover:bg-cyan-300 rounded-lg transition-colors whitespace-nowrap shrink-0 flex items-center justify-center gap-2 cursor-pointer"
           >
             <Play className="w-4 h-4" />
             Visualize 2D & 3D Structure
           </button>
         </form>
 
-        {/* Reference Example Molecule List (Dark Card Style Matching Screenshot) */}
+        {/* Reference Example Molecule List */}
         <div className="space-y-2">
-          <label className="block text-xs font-mono uppercase text-slate-500 font-semibold">
+          <label className="block text-xs font-mono text-slate-500 dark:text-slate-400 font-semibold">
             Example Molecules (Click to Load SMILES)
           </label>
-          <div className="bg-[#0B0F19] border border-slate-800 rounded-xl p-2 divide-y divide-slate-800/60">
+          <div className="bg-slate-900 dark:bg-[#070A12] border border-slate-800 rounded-xl p-2 divide-y divide-slate-800/60">
             {EXAMPLE_MOLECULES.map((mol) => {
               const isSelected = selectedExample === mol.name && customSmiles === mol.smiles;
               return (
@@ -393,13 +392,13 @@ export const TheoryAndProcedure: React.FC<TheoryAndProcedureProps> = ({
                   onClick={() => handleSelectExample(mol)}
                   className={`w-full text-left px-4 py-3 rounded-lg transition-colors flex items-center justify-between cursor-pointer ${
                     isSelected
-                      ? 'bg-[#1E2536] text-white font-semibold'
-                      : 'text-slate-200 hover:bg-[#161C2A]'
+                      ? 'bg-slate-800 dark:bg-cyan-950/50 text-white font-semibold'
+                      : 'text-slate-200 hover:bg-slate-800/60'
                   }`}
                 >
                   <span className="text-sm font-medium">{mol.name}</span>
                   <div className="flex items-center gap-3">
-                    <span className="text-xs font-mono text-slate-400">
+                    <span className="text-xs font-mono text-cyan-400">
                       {mol.smiles}
                     </span>
                     <span
@@ -407,7 +406,7 @@ export const TheoryAndProcedure: React.FC<TheoryAndProcedureProps> = ({
                         e.stopPropagation();
                         onTrySmilesInVisualizer(mol.smiles);
                       }}
-                      className="px-2.5 py-1 text-[11px] font-semibold bg-blue-900/80 hover:bg-blue-800 text-white rounded-md"
+                      className="px-2.5 py-1 text-[11px] font-semibold bg-cyan-600 hover:bg-cyan-500 text-slate-950 rounded-md whitespace-nowrap"
                     >
                       Open in Page 4 →
                     </span>

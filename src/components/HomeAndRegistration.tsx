@@ -57,7 +57,7 @@ export const HomeAndRegistration: React.FC<HomeAndRegistrationProps> = ({
     onNavigateModule('objectives');
   };
 
-  // PAGE 1: CLEAN, CENTERED STUDENT REGISTRATION PAGE
+  // PAGE 1: FUTURISTIC STUDENT REGISTRATION TERMINAL
   if (mode === 'registration') {
     const canProceed =
       Boolean(formData.studentName.trim()) &&
@@ -65,10 +65,10 @@ export const HomeAndRegistration: React.FC<HomeAndRegistrationProps> = ({
 
     return (
       <div className="max-w-xl mx-auto py-6">
-        <section className="bg-white border border-slate-200 rounded-xl p-6 sm:p-8 space-y-6">
+        <section className="bg-white dark:bg-[#0D1322] border border-slate-200 dark:border-slate-800 rounded-xl p-6 sm:p-8 space-y-6">
           {/* Official SRM Tiruchirappalli Branding */}
-          <div className="flex flex-col items-center text-center pb-5 border-b border-slate-200 space-y-3">
-            <div className="bg-white border border-slate-200 rounded-lg p-2.5 inline-flex items-center justify-center">
+          <div className="flex flex-col items-center text-center pb-5 border-b border-slate-200 dark:border-slate-800 space-y-3">
+            <div className="bg-white border border-slate-200 dark:border-cyan-500/30 rounded-lg p-2.5 inline-flex items-center justify-center">
               <img
                 src="/assets/aistudio/SRM_logo_f0d368b0.jpg"
                 alt="SRM Institute of Science and Technology Tiruchirappalli"
@@ -77,18 +77,18 @@ export const HomeAndRegistration: React.FC<HomeAndRegistrationProps> = ({
               />
             </div>
             <div>
-              <h1 className="text-lg sm:text-xl font-bold text-blue-950">
+              <h1 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-slate-100">
                 SRM Institute of Science and Technology, Tiruchirappalli
               </h1>
-              <p className="text-xs sm:text-sm font-medium text-slate-600 mt-0.5">
+              <p className="text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-400 mt-0.5">
                 Faculty of Engineering and Technology · School of Sciences · Division of Chemistry
               </p>
             </div>
             <div className="pt-1">
-              <h2 className="text-xl sm:text-2xl font-bold text-slate-900">
+              <h2 className="text-xl sm:text-2xl font-bold text-cyan-800 dark:text-cyan-400">
                 Cheminformatics Virtual Laboratory
               </h2>
-              <p className="text-xs sm:text-sm text-slate-600 mt-1">
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-1">
                 Enter your Student Name and Registration Number to unlock the virtual laboratory.
               </p>
             </div>
@@ -99,9 +99,9 @@ export const HomeAndRegistration: React.FC<HomeAndRegistrationProps> = ({
             <div>
               <label
                 htmlFor="student-name"
-                className="block text-xs font-semibold text-slate-700 mb-1.5"
+                className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5"
               >
-                Student Full Name <span className="text-rose-600">*</span>
+                Student Full Name <span className="text-rose-500">*</span>
               </label>
               <input
                 id="student-name"
@@ -110,16 +110,16 @@ export const HomeAndRegistration: React.FC<HomeAndRegistrationProps> = ({
                 value={formData.studentName}
                 onChange={(e) => handleNameChange(e.target.value)}
                 placeholder="Enter your full name"
-                className="w-full px-3.5 py-2.5 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-900 text-slate-900"
+                className="w-full px-3.5 py-2.5 text-sm bg-slate-50 dark:bg-[#131C31] border border-slate-300 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500"
               />
             </div>
 
             <div>
               <label
                 htmlFor="reg-number"
-                className="block text-xs font-semibold text-slate-700 mb-1.5"
+                className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5"
               >
-                Registration Number <span className="text-rose-600">*</span>
+                Registration Number <span className="text-rose-500">*</span>
               </label>
               <input
                 id="reg-number"
@@ -127,14 +127,14 @@ export const HomeAndRegistration: React.FC<HomeAndRegistrationProps> = ({
                 required
                 value={formData.registerNumber}
                 onChange={(e) => handleRegChange(e.target.value)}
-                placeholder="e.g., RA2411003040001"
-                className="w-full px-3.5 py-2.5 text-sm font-mono bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-900 text-slate-900"
+                placeholder="e.g., RA2611030050007"
+                className="w-full px-3.5 py-2.5 text-sm font-mono bg-slate-50 dark:bg-[#131C31] border border-slate-300 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500"
               />
             </div>
 
             {validationError && (
-              <div className="p-3 bg-rose-50 border border-rose-200 rounded-lg flex items-center gap-2 text-xs font-medium text-rose-800">
-                <AlertCircle className="w-4 h-4 text-rose-600 shrink-0" />
+              <div className="p-3 bg-rose-50 dark:bg-rose-950/50 border border-rose-200 dark:border-rose-800 rounded-lg flex items-center gap-2 text-xs font-medium text-rose-800 dark:text-rose-300">
+                <AlertCircle className="w-4 h-4 text-rose-600 dark:text-rose-400 shrink-0" />
                 <span>{validationError}</span>
               </div>
             )}
@@ -143,10 +143,10 @@ export const HomeAndRegistration: React.FC<HomeAndRegistrationProps> = ({
               <button
                 type="submit"
                 disabled={!canProceed}
-                className={`w-full px-5 py-3 text-sm font-bold rounded-lg transition-colors flex items-center justify-center gap-2 ${
+                className={`w-full px-5 py-3 text-sm font-bold rounded-lg transition-colors flex items-center justify-center gap-2 whitespace-nowrap ${
                   canProceed
-                    ? 'text-white bg-blue-900 hover:bg-blue-800 cursor-pointer'
-                    : 'text-slate-400 bg-slate-200 cursor-not-allowed'
+                    ? 'text-white dark:text-slate-950 bg-cyan-700 dark:bg-cyan-400 hover:bg-cyan-800 dark:hover:bg-cyan-300 cursor-pointer'
+                    : 'text-slate-400 dark:text-slate-600 bg-slate-200 dark:bg-slate-800 cursor-not-allowed'
                 }`}
               >
                 Next Page
@@ -154,12 +154,26 @@ export const HomeAndRegistration: React.FC<HomeAndRegistrationProps> = ({
               </button>
             </div>
           </form>
+
+          {/* Footer credit on First Page */}
+          <div className="pt-4 border-t border-slate-200 dark:border-slate-800 text-center">
+            <p className="text-xs text-slate-600 dark:text-slate-400">
+              Created by{' '}
+              <strong className="text-slate-900 dark:text-cyan-300 font-semibold">
+                ROBIN VIRGIL R (RA2611030050007)
+              </strong>{' '}
+              &amp;{' '}
+              <strong className="text-slate-900 dark:text-cyan-300 font-semibold">
+                KISHORIYA G V (RA2611030050058)
+              </strong>
+            </p>
+          </div>
         </section>
       </div>
     );
   }
 
-  // PAGE 2: SIMPLE, EASY-TO-UNDERSTAND LEARNING OBJECTIVES & WORKFLOW
+  // PAGE 2: LEARNING OBJECTIVES & WORKFLOW
   const simpleObjectives = [
     'Enter any SMILES notation and validate molecular structure',
     'Generate 2D chemical structures and interactive 3D models',
@@ -170,37 +184,37 @@ export const HomeAndRegistration: React.FC<HomeAndRegistrationProps> = ({
   ];
 
   const simpleWorkflow = [
-    { step: 'Step 1', title: 'Theory', desc: 'Read basic SMILES rules and lab steps' },
-    { step: 'Step 2', title: '2D & 3D Visualizer', desc: 'Enter SMILES and view 2D/3D structures' },
-    { step: 'Step 3', title: 'Properties Report', desc: 'Check molecular weight, LogP, TPSA & rules' },
-    { step: 'Step 4', title: 'Compare Molecules', desc: 'Compare multiple molecules with charts' },
-    { step: 'Step 5', title: 'Assessment & PDF', desc: 'Submit 12-mark assessment and download PDF' },
+    { step: '01. Step 1', title: 'Theory', desc: 'Read basic SMILES rules and lab steps' },
+    { step: '02. Step 2', title: '2D & 3D Visualizer', desc: 'Enter SMILES and view 2D/3D structures' },
+    { step: '03. Step 3', title: 'Properties Report', desc: 'Check molecular weight, LogP, TPSA & rules' },
+    { step: '04. Step 4', title: 'Compare Molecules', desc: 'Compare multiple molecules with charts' },
+    { step: '05. Step 5', title: 'Assessment & PDF', desc: 'Submit 12-mark assessment and download PDF' },
   ];
 
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       {/* Learning Objectives Box */}
-      <section className="bg-white border border-slate-200 rounded-xl p-6 sm:p-8 space-y-5">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-200">
+      <section className="bg-white dark:bg-[#0D1322] border border-slate-200 dark:border-slate-800 rounded-xl p-6 sm:p-8 space-y-5">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-200 dark:border-slate-800">
           <div>
-            <p className="text-xs font-mono uppercase text-teal-700 font-semibold">
-              PAGE 02 · EXPERIMENT OVERVIEW
+            <p className="text-xs font-mono text-cyan-700 dark:text-cyan-400 font-semibold">
+              Page 02 · Experiment Overview
             </p>
-            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 mt-0.5">
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-slate-100 mt-0.5">
               Learning Objectives
             </h2>
           </div>
           <button
             type="button"
             onClick={() => onNavigateModule('theory')}
-            className="px-4 py-2.5 text-xs font-bold text-white bg-blue-900 hover:bg-blue-800 rounded-lg transition-colors whitespace-nowrap shrink-0 flex items-center gap-1.5 cursor-pointer"
+            className="px-4 py-2.5 text-xs font-bold text-white dark:text-slate-950 bg-cyan-700 dark:bg-cyan-400 hover:bg-cyan-800 dark:hover:bg-cyan-300 rounded-lg transition-colors whitespace-nowrap shrink-0 flex items-center gap-1.5 cursor-pointer"
           >
             Next: Go to Theory
             <ArrowRight className="w-4 h-4" />
           </button>
         </div>
 
-        <p className="text-sm text-slate-600">
+        <p className="text-sm text-slate-600 dark:text-slate-400">
           In this virtual laboratory, you will perform the following tasks:
         </p>
 
@@ -208,11 +222,13 @@ export const HomeAndRegistration: React.FC<HomeAndRegistrationProps> = ({
           {simpleObjectives.map((item, idx) => (
             <div
               key={item}
-              className="p-3.5 bg-slate-50 border border-slate-200 rounded-lg flex items-start gap-3"
+              className="p-3.5 bg-slate-50 dark:bg-[#131C31] border border-slate-200 dark:border-slate-800 rounded-lg flex items-start gap-3"
             >
-              <CheckCircle2 className="w-4 h-4 text-teal-700 shrink-0 mt-0.5" />
-              <span className="text-xs sm:text-sm font-medium text-slate-800">
-                <strong className="font-mono text-blue-900 mr-1.5">0{idx + 1}.</strong>
+              <CheckCircle2 className="w-4 h-4 text-cyan-600 dark:text-cyan-400 shrink-0 mt-0.5" />
+              <span className="text-xs sm:text-sm font-medium text-slate-800 dark:text-slate-200">
+                <strong className="font-mono text-cyan-700 dark:text-cyan-400 mr-1.5">
+                  0{idx + 1}.
+                </strong>
                 {item}
               </span>
             </div>
@@ -221,9 +237,9 @@ export const HomeAndRegistration: React.FC<HomeAndRegistrationProps> = ({
       </section>
 
       {/* Simple 5-Step Lab Workflow */}
-      <section className="bg-white border border-slate-200 rounded-xl p-6 sm:p-8 space-y-4">
-        <div className="pb-3 border-b border-slate-200">
-          <h3 className="text-lg font-bold text-slate-900">
+      <section className="bg-white dark:bg-[#0D1322] border border-slate-200 dark:border-slate-800 rounded-xl p-6 sm:p-8 space-y-4">
+        <div className="pb-3 border-b border-slate-200 dark:border-slate-800">
+          <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100">
             How to Complete This Virtual Lab (5 Simple Steps)
           </h3>
         </div>
@@ -232,15 +248,15 @@ export const HomeAndRegistration: React.FC<HomeAndRegistrationProps> = ({
           {simpleWorkflow.map((w) => (
             <div
               key={w.step}
-              className="p-3.5 bg-slate-50 border border-slate-200 rounded-lg"
+              className="p-3.5 bg-slate-50 dark:bg-[#131C31] border border-slate-200 dark:border-slate-800 rounded-lg"
             >
-              <div className="text-xs font-mono font-bold text-blue-900">
+              <div className="text-xs font-mono font-bold text-cyan-700 dark:text-cyan-400">
                 {w.step}
               </div>
-              <div className="text-sm font-bold text-slate-900 mt-1">
+              <div className="text-sm font-bold text-slate-900 dark:text-slate-100 mt-1">
                 {w.title}
               </div>
-              <p className="text-xs text-slate-600 mt-1">
+              <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
                 {w.desc}
               </p>
             </div>

@@ -9,16 +9,32 @@
 }
 
 @layer base {
-  body {
-    font-family: var(--font-sans);
-    background-color: #F8FAFC;
-    color: #0F172A;
-    transition: background-color 150ms ease, color 150ms ease;
+  :root {
+    --lab-bg: #F8FAFC;
+    --lab-surface: #FFFFFF;
+    --lab-surface-muted: #F1F5F9;
+    --lab-border: #E2E8F0;
+    --lab-text: #0F172A;
+    --lab-text-muted: #475569;
+    --lab-accent: #0284C7;
   }
 
-  html.dark body {
-    background-color: #0B0F19;
-    color: #F1F5F9;
+  html.dark {
+    --lab-bg: #070A12;
+    --lab-surface: #0D1322;
+    --lab-surface-muted: #131C31;
+    --lab-border: #1E293B;
+    --lab-text: #F1F5F9;
+    --lab-text-muted: #94A3B8;
+    --lab-accent: #06B6D4;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--lab-bg);
+    color: var(--lab-text);
+    transition: background-color 150ms cubic-bezier(0.16, 1, 0.3, 1),
+      color 150ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   h1, h2, h3, h4, .font-display {
@@ -36,117 +52,17 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* Global Dark Mode Surface & Typography Adaptation for Scientific Workbench */
-html.dark .bg-\[\#F8FAFC\] {
-  background-color: #0B0F19 !important;
+.futuristic-grid-bg {
+  background-image:
+    linear-gradient(to right, rgba(14, 165, 233, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(14, 165, 233, 0.05) 1px, transparent 1px);
+  background-size: 32px 32px;
 }
 
-html.dark .bg-white {
-  background-color: #111827 !important;
-}
-
-html.dark .bg-slate-50,
-html.dark .bg-slate-50\/60,
-html.dark .bg-slate-50\/70 {
-  background-color: #1E293B !important;
-}
-
-html.dark .bg-slate-100,
-html.dark .bg-slate-100\/90 {
-  background-color: #1E293B !important;
-}
-
-html.dark .border-slate-200,
-html.dark .border-slate-300,
-html.dark .border-slate-100 {
-  border-color: #334155 !important;
-}
-
-html.dark .divide-slate-200 > :not([hidden]) ~ :not([hidden]) {
-  border-color: #334155 !important;
-}
-
-html.dark .text-slate-900,
-html.dark .text-blue-950 {
-  color: #F8FAFC !important;
-}
-
-html.dark .text-slate-800,
-html.dark .text-slate-700 {
-  color: #E2E8F0 !important;
-}
-
-html.dark .text-slate-600,
-html.dark .text-slate-500 {
-  color: #94A3B8 !important;
-}
-
-html.dark .text-blue-900,
-html.dark .text-blue-800 {
-  color: #60A5FA !important;
-}
-
-html.dark .text-teal-800,
-html.dark .text-teal-700 {
-  color: #2DD4BF !important;
-}
-
-html.dark .text-amber-800,
-html.dark .text-amber-700 {
-  color: #FBBF24 !important;
-}
-
-html.dark .text-emerald-800,
-html.dark .text-emerald-700,
-html.dark .text-emerald-900,
-html.dark .text-emerald-950 {
-  color: #34D399 !important;
-}
-
-html.dark .text-rose-700,
-html.dark .text-rose-800,
-html.dark .text-rose-900 {
-  color: #FB7185 !important;
-}
-
-html.dark .bg-blue-50,
-html.dark .bg-blue-50\/50 {
-  background-color: rgba(30, 58, 138, 0.35) !important;
-}
-
-html.dark .border-blue-200,
-html.dark .border-blue-300 {
-  border-color: #1D4ED8 !important;
-}
-
-html.dark .bg-emerald-50 {
-  background-color: rgba(6, 78, 59, 0.4) !important;
-}
-
-html.dark .border-emerald-200,
-html.dark .border-emerald-300,
-html.dark .border-emerald-400 {
-  border-color: #059669 !important;
-}
-
-html.dark .bg-rose-50 {
-  background-color: rgba(136, 19, 55, 0.4) !important;
-}
-
-html.dark .bg-teal-50,
-html.dark .bg-teal-50\/70 {
-  background-color: rgba(19, 78, 74, 0.4) !important;
-}
-
-html.dark input,
-html.dark textarea,
-html.dark select {
-  background-color: #0F172A !important;
-  color: #F8FAFC !important;
-  border-color: #334155 !important;
-}
-
-html.dark input::placeholder,
-html.dark textarea::placeholder {
-  color: #64748B !important;
+html.dark .futuristic-grid-bg {
+  background-image:
+    radial-gradient(circle at 50% 0%, rgba(6, 182, 212, 0.08), transparent 55%),
+    linear-gradient(to right, rgba(6, 182, 212, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(6, 182, 212, 0.04) 1px, transparent 1px);
+  background-size: 100% 100%, 32px 32px, 32px 32px;
 }
